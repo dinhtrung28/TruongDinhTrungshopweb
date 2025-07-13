@@ -1,13 +1,16 @@
 
-import React, { useState } from "react";
+import React, { use, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../store/userSlice";
 
 const Login = ({ setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
 
   const handleLogin = async (e) => {
@@ -19,6 +22,7 @@ const Login = ({ setIsLoggedIn }) => {
         password,
       });
       console.log(response)
+      dispatch(login(response.data.token));
 
       if (response.data?.token) {
         localStorage.setItem("authToken", response.data.token);

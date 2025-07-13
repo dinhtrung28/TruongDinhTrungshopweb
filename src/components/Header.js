@@ -1,13 +1,17 @@
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { logout } from "../store/userSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("authToken");
   const user = localStorage.getItem("user");
+  const dispatch = useDispatch()
 
   const logOut = () => {
     localStorage.removeItem("authToken");
+    dispatch(logout());
     navigate("/login");
   };
 
